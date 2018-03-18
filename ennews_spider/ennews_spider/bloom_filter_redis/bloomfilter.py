@@ -11,9 +11,7 @@ class BloomFilter:
         # redis-bitmap的key
         self.key = key
         # redis连接信息
-        # redis连接信息
-        self.pool = redis.ConnectionPool(host=host, port=port)
-        self.handle = redis.StrictRedis(connection_pool=self.pool, charset='utf-8')
+        self.handle = redis.Redis(host=host, port=port)
         # 哈希函数列表
         self.hash_list = hash_list
 
@@ -34,5 +32,6 @@ class BloomFilter:
             if self.handle.getbit(self.key, real_value) == 0:
                 self.handle.setbit(self.key, real_value, 1)
                 flag = True
+
         # 当所有hash值在bitmap中对应位都是1，说明此条目重复，返回False
         return flag
