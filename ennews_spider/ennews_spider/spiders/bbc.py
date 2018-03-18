@@ -3,12 +3,14 @@ import scrapy
 import time
 from ..service.html_filter import XssHtml
 from ..service.helper import Helper
+from ..bloom_filter_redis import bloomfilter
 
 
 class BBCSpider(scrapy.Spider):
     name = "bbc"
     custom_settings = {}
     start_urls = ['http://www.bbc.com/news']
+    bloom_filter = bloomfilter.BloomFilter(key="bbc")
 
     def parse(self, response):
 
@@ -19,11 +21,9 @@ class BBCSpider(scrapy.Spider):
                 continue
             id = "".join(url.split('/')[2:])
             # 判断新闻是否已存在
-            # item_exist = CheckRepeat(
-            #    site_id=self.site_id).exist(
-            #    item_id=origin_item_id)
-            item_exist = False
-            if item_exist:
+            item_new = self.bloom_filter.do_filter(id)
+            print "新闻是新的" + str(item_new)
+            if not item_new:
                 continue
             else:
                 url = "http://www.bbc.com" + url
