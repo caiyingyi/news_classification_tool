@@ -10,7 +10,6 @@ class BBCSpider(scrapy.Spider):
     name = "bbc"
     custom_settings = {}
     start_urls = ['http://www.bbc.com/news']
-    bloom_filter = bloomfilter.BloomFilter(key="bbc")
 
     def parse(self, response):
 
@@ -21,15 +20,17 @@ class BBCSpider(scrapy.Spider):
                 continue
             id = "".join(url.split('/')[2:])
             # 判断新闻是否已存在
-            item_new = self.bloom_filter.do_filter(id)
-            print "新闻是新的" + str(item_new)
-            if not item_new:
-                continue
-            else:
+            bloom_filter = bloomfilter.BloomFilter(key="bbc")
+            item_new = bloom_filter.do_filter(id)
+            # item_new = True
+            if item_new:
                 url = "http://www.bbc.com" + url
                 yield scrapy.Request(url,
                                      callback=self.parse_article,
                                      meta={"id": id})
+            else:
+                continue
+
 
     def parse_article(self, response):
         try:
