@@ -3,5 +3,5 @@
 from scrapy import cmdline
 
 if __name__ == '__main__':
-    name = "bbc"
+    name = "news_asia"
     cmdline.execute(("scrapy crawl %s" % name).split())

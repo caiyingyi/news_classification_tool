@@ -7,7 +7,6 @@
 
 import pymongo
 from scrapy.conf import settings
-from bloom_filter_redis import bloomfilter
 
 
 class EnnewsSpiderPipeline(object):

@@ -31,7 +31,6 @@ class BBCSpider(scrapy.Spider):
             else:
                 continue
 
-
     def parse_article(self, response):
         try:
             item = dict()
