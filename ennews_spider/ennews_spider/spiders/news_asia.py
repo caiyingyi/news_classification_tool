@@ -9,8 +9,8 @@ class NewsAsiaSpider(scrapy.Spider):
     name = "news_asia"
     custom_settings = {
         "DOWNLOADER_MIDDLEWARES": {
-            'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': 125,
-            'ennews_spider.middlewares.UAPOOLS': 126
+            'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': 124,
+            'ennews_spider.middlewares.UAPOOLS': 122
         }
     }
     start_urls = ['https://www.channelnewsasia.com/archives/8395986/news?channelId=7469166']
@@ -28,8 +28,8 @@ class NewsAsiaSpider(scrapy.Spider):
                 id = url.split("-")[-1]
 
                 # 判断新闻是否已存在
-                # item_new = self.bloom_filter.do_filter(id)
-                item_new = True
+                item_new = self.bloom_filter.do_filter(id)
+                # item_new = True
                 if item_new:
                     url = "https://www.channelnewsasia.com" + url
                     yield scrapy.Request(url,
@@ -39,6 +39,7 @@ class NewsAsiaSpider(scrapy.Spider):
                     continue
         # 翻页
         next_page = response.xpath('//a[@class="pagination__link is-next"]/@href').extract_first()
+        print("next page")
         if next_page:
             next_url = "https://www.channelnewsasia.com" + next_page
             yield scrapy.Request(next_url, callback=self.parse)
