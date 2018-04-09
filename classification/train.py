@@ -63,8 +63,8 @@ def main():
     corpus_path = "models/corpus.lda-c"
     lda_model_path = "models/lda_model.lda"
 
-    # 体育，娱乐，科教，财经，军事，社会，国际
-    lda_num_topics = 7
+    # topics = ["World", "Sport", "Business", "Technology", "Lifestyle", "Health"]
+    lda_num_topics = 6
 
     # 连接MongoDB
     corpus_collection = MongoClient("mongodb://localhost:27017")["ennews"][
