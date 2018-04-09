@@ -34,6 +34,8 @@ class BBCSpider(scrapy.Spider):
     def parse_article(self, response):
         try:
             item = dict()
+            item["media"] = "bbc"
+            item["topic"] = ""
             item['url'] = response.url
             item['id'] = response.meta['id']
             item['created_time'] = int(time.time())
