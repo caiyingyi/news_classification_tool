@@ -73,7 +73,7 @@ class NewsWeekSpider(scrapy.Spider):
             else:
                 item['published_at'] = int(time.time())
 
-            item['origin_content'] = response.xpath('//div[@class="article-body"]').extract_first()
+            item['origin_content'] = response.xpath('//div[@itemprop="articleBody"]').extract_first()
             try:
                 parser = XssHtml()
                 parser.feed(item['origin_content'])

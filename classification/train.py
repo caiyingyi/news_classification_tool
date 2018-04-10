@@ -18,7 +18,7 @@ class Dictionary(object):
 
     def build(self):
         self.cursor.rewind()
-        dictionary = corpora.Dictionary(review["filter_data"] for review in self.cursor)
+        dictionary = corpora.Dictionary(review["filter_data"] for review in self.cursor if review.get("filter_data"))
         dictionary.filter_extremes(keep_n=10000)
         dictionary.compactify()
         corpora.Dictionary.save(dictionary, self.dictionary_path)
@@ -35,7 +35,8 @@ class Corpus(object):
     def __iter__(self):
         self.cursor.rewind()
         for review in self.cursor:
-            yield self.reviews_dictionary.doc2bow(review["filter_data"])
+            if review.get("filter_data"):
+                yield self.reviews_dictionary.doc2bow(review["filter_data"])
 
     def serialize(self):
         BleiCorpus.serialize(self.corpus_path, self, id2word=self.reviews_dictionary)

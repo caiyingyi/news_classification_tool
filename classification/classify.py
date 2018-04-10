@@ -22,16 +22,17 @@ class Classify(object):
     def run(self):
         self.cursor.rewind()
         for review in self.cursor:
-            data = review["filter_data"]
-            data_dictionary = self.dictionary.doc2bow(data)
-            categories_list = self.lda[data_dictionary]
+            if review.get("filter_data"):
+                data = review["filter_data"]
+                data_dictionary = self.dictionary.doc2bow(data)
+                categories_list = self.lda[data_dictionary]
 
-            print categories_list
-            categories_list.sort(key=lambda x: x[1], reverse=True)
-            categories = categories_list[0][0]
+                print categories_list
+                categories_list.sort(key=lambda x: x[1], reverse=True)
+                categories = categories_list[0][0]
 
-            # 插入数据库
-            self.collection.update({"_id": review['_id']}, {"$set": {"categories": categories}})
+                # 插入数据库
+                self.collection.update({"_id": review['_id']}, {"$set": {"categories": categories}})
 
 
 def main():
