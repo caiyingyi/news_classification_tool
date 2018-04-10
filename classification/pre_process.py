@@ -1,7 +1,6 @@
 # -*- coding:utf-8 -*-
 import re
 from nltk.tokenize import word_tokenize
-from nltk.corpus import stopwords
 from nltk.stem.lancaster import LancasterStemmer
 
 """
@@ -15,6 +14,11 @@ class PreProcess(object):
     def __init__(self, collection, cursor):
         self.collection = collection
         self.cursor = cursor
+        # 读取去停词
+        self.english_stopwords = []
+        with open(r"F:\news_classification_tool\classification\stopwords.txt") as stopwords_file:
+            for line in stopwords_file:
+                self.english_stopwords.append(line.strip())
 
     def data_filter(self):
         self.cursor.rewind()
@@ -45,10 +49,11 @@ class PreProcess(object):
 
                 # nltk分词
                 data = [word.lower() for word in word_tokenize(s)]
-                # nltk去停词,去标点
-                english_stopwords = stopwords.words('english')
-                english_punctuations = [',', '.', ':', ';', '?', '(', ')', '[', ']', '&', '!', '*', '@', '#', '$', '%']
-                data = [word for word in data if word not in english_stopwords + english_punctuations]
+                # 去停词,去标点
+                # english_stopwords = stopwords.words('english')
+                english_punctuations = [',', '.', ':', ';', '?', '(', ')', '[', ']', '&', '!', '*', '@', '#', '$', '%',
+                                        '-']
+                data = [word for word in data if word not in self.english_stopwords + english_punctuations]
                 # nltk 词干化
                 st = LancasterStemmer()
                 data = [st.stem(word) for word in data]

@@ -68,7 +68,7 @@ def main():
 
     # 连接MongoDB
     corpus_collection = MongoClient("mongodb://localhost:27017")["ennews"][
-        "bbc"]
+        "news"]
     reviews_cursor = corpus_collection.find()
 
     # 数据预处理
