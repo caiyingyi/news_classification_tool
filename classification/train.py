@@ -60,9 +60,9 @@ class Train:
 def main():
     logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
-    dictionary_path = "models/dictionary.dict"
-    corpus_path = "models/corpus.lda-c"
-    lda_model_path = "models/lda_model.lda"
+    dictionary_path = "models2/dictionary.dict"
+    corpus_path = "models2/corpus.lda-c"
+    lda_model_path = "models2/lda_model.lda"
 
     # topics = ["World", "Sport", "Business", "Technology", "Lifestyle", "Health"]
     lda_num_topics = 6
