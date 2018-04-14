@@ -70,7 +70,7 @@ def main():
     # 连接MongoDB
     corpus_collection = MongoClient("mongodb://localhost:27017")["ennews"][
         "news"]
-    reviews_cursor = corpus_collection.find()
+    reviews_cursor = corpus_collection.find(no_cursor_timeout=True)
 
     # 数据预处理
     PreProcess(corpus_collection, reviews_cursor).data_filter()
@@ -78,6 +78,7 @@ def main():
     dictionary = Dictionary(reviews_cursor, dictionary_path).build()
     # Corpus建模
     Corpus(reviews_cursor, dictionary, corpus_path).serialize()
+    reviews_cursor.close()
     # LDA建模
     lda_model = Train.run(lda_model_path, corpus_path, lda_num_topics, dictionary)
 

@@ -6,6 +6,8 @@
 输出：各主题f1的均值
 用法：average_evaluation = Evaluate(corpus_collection, reviews_cursor, lda_num_topics, topics).calculate()
 """
+from pymongo import MongoClient
+import logging
 
 
 class Evaluate(object):
@@ -46,3 +48,22 @@ class Evaluate(object):
         print("该分类器的精度：" + str(average_evaluation))
 
         return average_evaluation
+
+
+def main():
+    logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+    # 主题
+    lda_num_topics = 6
+    topics = {"World": 1, "Sport": 4, "Business": 0, "Technology": 5, "Lifestyle": 2, "Health": 3}
+
+    # 连接MongoDB
+    corpus_collection = MongoClient("mongodb://localhost:27017")["ennews"][
+        "upi"]
+    reviews_cursor = corpus_collection.find(no_cursor_timeout=True)
+
+    evaluate = Evaluate(corpus_collection, reviews_cursor, lda_num_topics, topics).calculate()
+    reviews_cursor.close()
+
+
+if __name__ == "__main__":
+    main()
