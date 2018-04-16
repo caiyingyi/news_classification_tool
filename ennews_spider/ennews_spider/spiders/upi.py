@@ -11,34 +11,21 @@ class UPI(scrapy.Spider):
     custom_settings = {
         "DOWNLOADER_MIDDLEWARES": {
             'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': 124,
-            'test_newsspider.middlewares.UAPOOLS': 122
+            'ennews_spider.middlewares.UAPOOLS': 122
         }
     }
-    start_urls = ['https://www.upi.com/Sports_News/2018/',
-                  'https://www.upi.com/Entertainment_News/2018/',
-                  'https://www.upi.com/Health_News/2018/',
-                  'https://www.upi.com/Science_News/2018/',
-                  'https://www.upi.com/Energy-News/2018/',
-                  'https://www.upi.com/Defense-News/2018/',
-                  'https://www.upi.com/Sports_News/2017/',
-                  'https://www.upi.com/Entertainment_News/2017/',
-                  'https://www.upi.com/Health_News/2017/',
-                  'https://www.upi.com/Science_News/2017/',
-                  'https://www.upi.com/Energy-News/2017/',
-                  'https://www.upi.com/Defense-News/2017/',
-                  'https://www.upi.com/Sports_News/2016/',
-                  'https://www.upi.com/Entertainment_News/2016/',
-                  'https://www.upi.com/Health_News/2016/',
-                  'https://www.upi.com/Science_News/2016/',
-                  'https://www.upi.com/Energy-News/2016/',
-                  'https://www.upi.com/Defense-News/2016/',
-                  'https://www.upi.com/Sports_News/2015/',
-                  'https://www.upi.com/Entertainment_News/2015/',
-                  'https://www.upi.com/Health_News/2015/',
-                  'https://www.upi.com/Science_News/2015/',
-                  'https://www.upi.com/Energy-News/2015/',
-                  'https://www.upi.com/Defense-News/2015/']
-
+    news_urls = []
+    for year in range(2018, 2000, -1):
+        news_urls.append('https://www.upi.com/Science_News/%s/' % year)
+        news_urls.append('https://www.upi.com/Sports_News/%s/' % year)
+        news_urls.append('https://www.upi.com/Defense-News/%s/' % year)
+        if year >= 2003:
+            news_urls.append('https://www.upi.com/Entertainment_News/%s/' % year)
+            if year >= 2005:
+                news_urls.append('https://www.upi.com/Health_News/%s/' % year)
+                if year >= 2006:
+                    news_urls.append('https://www.upi.com/Energy-News/%s/' % year)
+    start_urls = news_urls
     bloom_filter = bloomfilter.BloomFilter(key="upi")
 
     def parse(self, response):
