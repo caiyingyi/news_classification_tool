@@ -7,7 +7,7 @@ class BloomFilter:
     hash_list = ["rs_hash", "js_hash", "pjw_hash", "elf_hash", "bkdr_hash",
                  "sdbm_hash", "djb_hash", "dek_hash"]
 
-    def __init__(self, key, host='127.0.0.1', port=6379, hash_list=hash_list):
+    def __init__(self, key, host='39.108.180.114', port=6379, hash_list=hash_list):
         # redis-bitmap的key
         self.key = key
         # redis连接信息

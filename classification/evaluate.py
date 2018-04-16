@@ -57,8 +57,8 @@ def main():
     topics = {"World": 1, "Sport": 4, "Business": 0, "Technology": 5, "Lifestyle": 2, "Health": 3}
 
     # 连接MongoDB
-    corpus_collection = MongoClient("mongodb://localhost:27017")["ennews"][
-        "upi"]
+    corpus_collection = MongoClient("mongodb://39.108.180.114:27017")["ennews"][
+        "testing"]
     reviews_cursor = corpus_collection.find(no_cursor_timeout=True)
 
     evaluate = Evaluate(corpus_collection, reviews_cursor, lda_num_topics, topics).calculate()
