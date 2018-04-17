@@ -25,8 +25,8 @@ class UPI(scrapy.Spider):
                 news_urls.append('https://www.upi.com/Health_News/%s/' % year)
                 if year >= 2006:
                     news_urls.append('https://www.upi.com/Energy-News/%s/' % year)
-    start_urls = news_urls
     bloom_filter = bloomfilter.BloomFilter(key="upi")
+    start_urls = news_urls
 
     def parse(self, response):
         origin_topic = response.url.split("/")[3]
