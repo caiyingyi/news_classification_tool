@@ -5,6 +5,7 @@ from gensim import corpora
 from gensim.corpora import BleiCorpus
 import gensim
 from pre_process import PreProcess
+import sys
 
 """
 用途：从MongoDB中读取语料，进行预处理后，训练LDA模型
@@ -82,7 +83,17 @@ def main():
     # LDA建模
     lda_model = Train.run(lda_model_path, corpus_path, lda_num_topics, dictionary)
 
+    # 输出主题
+    # make a copy of original stdout route
+    stdout_backup = sys.stdout
+    # define the log file that receives your log info
+    log_file = open(".\lda_topics.log", "w")
+    # redirect print output to log file
+    sys.stdout = log_file
     lda_model.print_topics()
+    log_file.close()
+    # restore the output to initial pattern
+    sys.stdout = stdout_backup
 
 
 if __name__ == '__main__':
