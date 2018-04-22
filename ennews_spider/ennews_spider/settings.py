@@ -93,8 +93,8 @@ LOG_LEVEL = 'DEBUG'
 
 MONGO_HOST = "39.108.180.114"  # 主机IP
 MONGO_PORT = 27017  # 端口号
-MONGO_DB = "ennews"  # 库名
-MONGO_COLL = "news"
+MONGO_DB = "testing"  # 库名
+MONGO_COLL = "test_news"
 
 
 

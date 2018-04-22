@@ -15,8 +15,8 @@ class FindTopics(object):
     def __init__(self, collection, cursor):
         self.collection = collection
         self.cursor = cursor
-        dictionary_path = "models/dictionary.dict"
-        lda_model_path = "models/lda_model.lda"
+        dictionary_path = "models2/dictionary.dict"
+        lda_model_path = "models2/lda_model.lda"
         self.dictionary = corpora.Dictionary.load(dictionary_path)
         self.lda = LdaModel.load(lda_model_path)
         self.topics = {"World": 0, "Sport": 2, "Business": 1, "Technology": 3, "Lifestyle": 4, "Health": 5}
@@ -60,7 +60,7 @@ def main():
     # make a copy of original stdout route
     stdout_backup = sys.stdout
     # define the log file that receives your log info
-    log_file = open(".\lda_topics.log", "w")
+    log_file = open(".\lda_topics2.log", "w")
     # redirect print output to log file
     sys.stdout = log_file
     print(str(topics_matrix))

@@ -58,7 +58,7 @@ def main():
 
     # 连接MongoDB
     corpus_collection = MongoClient("mongodb://39.108.180.114:27017")["ennews"][
-        "testing"]
+        "news"]
     reviews_cursor = corpus_collection.find(no_cursor_timeout=True)
 
     evaluate = Evaluate(corpus_collection, reviews_cursor, lda_num_topics, topics).calculate()
