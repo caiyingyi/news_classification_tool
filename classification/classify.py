@@ -14,8 +14,8 @@ class Classify(object):
     def __init__(self, collection, cursor):
         self.collection = collection
         self.cursor = cursor
-        dictionary_path = "models/dictionary.dict"
-        lda_model_path = "models/lda_model.lda"
+        dictionary_path = "models2/dictionary.dict"
+        lda_model_path = "models2/lda_model.lda"
         self.dictionary = corpora.Dictionary.load(dictionary_path)
         self.lda = LdaModel.load(lda_model_path)
 
@@ -40,7 +40,7 @@ def main():
 
     # 连接MongoDB，读取待分类数据
     corpus_collection = MongoClient("mongodb://39.108.180.114:27017")["ennews"][
-        "testing"]
+        "news"]
     reviews_cursor = corpus_collection.find(no_cursor_timeout=True)
 
     # 数据预处理
