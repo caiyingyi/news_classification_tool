@@ -2,7 +2,6 @@
 """
 用途：评估分类器的精度
 传入参数：数据库连接corpus_collection，数据库游标reviews_cursor，主题数目lda_num_topics，主题字典topics
-         topics = {"World":0,"Sport":1,"Business":2,"Technology":3,"Lifestyle":4,"Health":5}
 输出：各主题f1的均值
 用法：average_evaluation = Evaluate(corpus_collection, reviews_cursor, lda_num_topics, topics).calculate()
 """
