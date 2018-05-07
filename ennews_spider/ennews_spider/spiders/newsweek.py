@@ -71,7 +71,7 @@ class NewsWeekSpider(scrapy.Spider):
                 try:
                     published_at = time.strptime(str(published_at), "%Y-%m-%d")
                     seven_days_ago = (datetime.datetime.now() - datetime.timedelta(days=7)).timetuple()
-                    if published_at < seven_days_ago:
+                    if published_at <= seven_days_ago:
                         self.early += 1
                         return
                     else:

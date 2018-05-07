@@ -62,7 +62,7 @@ class BBCSpider(scrapy.Spider):
             published_at = response.xpath('//li[@class="mini-info-list__item"]/div/@data-seconds').extract_first()
             # 判断是否七天内新闻
             seven_days_ago = int(time.mktime((datetime.datetime.now() - datetime.timedelta(days=7)).timetuple()))
-            if published_at < seven_days_ago:
+            if published_at <= seven_days_ago:
                 return
 
             item = dict()

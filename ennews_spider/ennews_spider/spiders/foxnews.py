@@ -67,7 +67,7 @@ class FoxNewsSpider(scrapy.Spider):
                 try:
                     published_at = time.strptime(str(published_at), "%Y-%m-%d")
                     seven_days_ago = (datetime.datetime.now() - datetime.timedelta(days=7)).timetuple()
-                    if published_at < seven_days_ago:
+                    if published_at <= seven_days_ago:
                         return
                     else:
                         published_at = int(time.mktime(published_at))
